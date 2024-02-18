@@ -6,6 +6,8 @@ import ConflictView from './ConflictView.vue';
 import ActivatedObligationView from './ActivatedObligationView.vue';
 import DerivedPolicyView from './DerivedPolicyView.vue';
 
+// import { testGenerate } from '@/dtou/generator';
+
 // import testPolicyApp from '@/assets/reasoning/dtou-policy-app-test1.n3s?raw';
 import testPolicyApp from '@/assets/reasoning/dtou-policy-app-test2.n3s?raw';
 // import testPolicyUsageContext from '@/assets/reasoning/dtou-policy-usage1.n3s?raw';
@@ -56,17 +58,20 @@ watchEffect(() => {
 })
 
 async function registerApp() {
-    const response = await fetch(`${solidServer.value}/dtou`, {
-        method: "POST",
-        body: JSON.stringify({
-            policy: appPolicy.value,
-        }),
-    });
-    if (response.ok) {
-        registered.value = true;
-    } else {
-        registered.value = false;
-    }
+    const result = await testGenerate();
+    appPolicy.value = result;
+
+    // const response = await fetch(`${solidServer.value}/dtou`, {
+    //     method: "POST",
+    //     body: JSON.stringify({
+    //         policy: appPolicy.value,
+    //     }),
+    // });
+    // if (response.ok) {
+    //     registered.value = true;
+    // } else {
+    //     registered.value = false;
+    // }
 }
 
 async function iCheckConflicts() {

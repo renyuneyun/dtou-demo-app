@@ -31,7 +31,7 @@ async function query(rdfDoc: string, query: string) {
     return (await myEngine.queryBindings(
         `${PREFIXES}\n${query}`,
         {
-            sources: [rdfToStore(rdfDoc)]
+            sources: [rdfToStore(rdfDoc)],
         }
     )).toArray();
 }
@@ -48,6 +48,7 @@ export async function extractDataUrlFromAppPolicy(appPolicy: string) {
     }
     `)) {
         const s = binding.get("s").value;
+        console.log(s);
         for (const binding of await query(appPolicy, `
         SELECT ?o WHERE {
             <${s}> dtou:data ?o.
